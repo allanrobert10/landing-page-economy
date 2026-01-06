@@ -22,21 +22,40 @@ document.addEventListener('DOMContentLoaded', () => {
             const btn = form.querySelector('button');
             const originalText = btn.innerHTML;
 
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
             btn.innerHTML = 'Enviando...';
             btn.style.opacity = '0.7';
 
-            // Simulate API call
-            setTimeout(() => {
-                btn.innerHTML = 'Mensagem Enviada!';
-                btn.style.background = 'var(--accent-eco)';
-                form.reset();
-
+            fetch('https://n8n-n8n.oksss4.easypanel.host/webhook-test/leads-economy', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (response.ok) {
+                    btn.innerHTML = 'Mensagem Enviada!';
+                    btn.style.background = 'var(--accent-eco)';
+                    form.reset();
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                btn.innerHTML = 'Erro ao enviar';
+                btn.style.background = 'red';
+            })
+            .finally(() => {
                 setTimeout(() => {
                     btn.innerHTML = originalText;
                     btn.style.background = 'var(--accent-solar)';
                     btn.style.opacity = '1';
                 }, 3000);
-            }, 1500);
+            });
         });
     }
 
