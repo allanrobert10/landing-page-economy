@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.innerHTML = 'Enviando...';
             btn.style.opacity = '0.7';
 
-            fetch('https://n8n-n8n.oksss4.easypanel.host/webhook/leads-economy', {
+            fetch('https://new-backend.botconversa.com.br/api/v1/webhooks-automation/catch/181101/Kw1JCcBmQS01/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
